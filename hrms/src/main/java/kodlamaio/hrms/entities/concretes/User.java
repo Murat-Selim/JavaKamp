@@ -4,13 +4,20 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
 import javax.persistence.Table;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
 @Entity
+@Inheritance(strategy = InheritanceType.JOINED)
 @Table(name="users")
+@AllArgsConstructor
+@NoArgsConstructor
 public class User {
    
    @Id
@@ -24,14 +31,4 @@ public class User {
    @Column(name="password")
    private String password;
    
-   public User() {
-	   
-   }
-
-   public User(int id, String email, String password) {
-	super();
-	this.id = id;
-	this.email = email;
-	this.password = password;
-   }
 }
