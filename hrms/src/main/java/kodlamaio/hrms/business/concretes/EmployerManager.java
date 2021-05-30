@@ -12,7 +12,6 @@ import kodlamaio.hrms.business.abstracts.EmployerService;
 import kodlamaio.hrms.business.abstracts.UserService;
 import kodlamaio.hrms.core.utilities.results.DataResult;
 import kodlamaio.hrms.core.utilities.results.ErrorDataResult;
-import kodlamaio.hrms.core.utilities.results.Result;
 import kodlamaio.hrms.core.utilities.results.SuccessDataResult;
 import kodlamaio.hrms.dataAccess.abstracts.EmployerDao;
 import kodlamaio.hrms.entities.concretes.EmailActivation;
@@ -40,7 +39,7 @@ public class EmployerManager implements EmployerService{
 	}
 
 	@Override
-	public Result add(Employer employer) {
+	public DataResult<Employer> add(Employer employer) {
 		
 		if(!companyNameChecker(employer)) {
 			new ErrorDataResult<Employer>(null, "Sirket bilgisi doldurulmak zorundadir");
@@ -81,7 +80,7 @@ public class EmployerManager implements EmployerService{
 	
 	private boolean companyNameChecker(Employer employer) {
 		
-		if(employer.getCompany_name().isBlank() || employer.getCompany_name() == null) {
+		if(employer.getCompanyName().isBlank() || employer.getCompanyName() == null) {
 			return false;
 		}
 		return true;
@@ -89,7 +88,7 @@ public class EmployerManager implements EmployerService{
 	
    private boolean webAddressChecker(Employer employer) {
 		
-		if(employer.getWeb_address().isBlank() || employer.getWeb_address() == null) {
+		if(employer.getWebAddress().isBlank() || employer.getWebAddress() == null) {
 			return false;
 		}
 		return true;
@@ -118,7 +117,7 @@ public class EmployerManager implements EmployerService{
 	     if(!matcher.matches()) {
 	    	 return false;
 	     }
-	     else if (!employer.getEmail().contains(employer.getWeb_address())) {
+	     else if (!employer.getEmail().contains(employer.getWebAddress())) {
 				return false;
 			}
 	     return true;
@@ -131,7 +130,7 @@ public class EmployerManager implements EmployerService{
 				+ "|^(\\+\\d{1,3}( )?)?(\\d{3}[ ]?)(\\d{2}[ ]?){2}\\d{2}$";
 
 		Pattern pattern = Pattern.compile(patterns);
-		Matcher matcher = pattern.matcher(employer.getPhone_number());
+		Matcher matcher = pattern.matcher(employer.getPhoneNumber());
 		if (!matcher.matches()) {
 			return false;
 		}

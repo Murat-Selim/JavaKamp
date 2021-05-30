@@ -63,7 +63,7 @@ public class CandidateManager implements CandidateService{
 		}
 		
 		
-		else if(!MernisValidation.isRealPerson(candidate.getIdentity_number())) {
+		else if(!MernisValidation.isRealPerson(candidate.getIdentityNumber())) {
 			return new ErrorDataResult<Candidate>(null,"Kimlik Doğrulanamadı");
 		}
 		
@@ -79,7 +79,7 @@ public class CandidateManager implements CandidateService{
 			return new ErrorDataResult<Candidate>(null,"Email Zaten Kayitli");
 		}
 		
-		else if(candidateDao.findAllByIdentityNumber(candidate.getIdentity_number()).stream().count() != 0) {
+		else if(candidateDao.findAllByIdentityNumber(candidate.getIdentityNumber()).stream().count() != 0) {
 			return new ErrorDataResult<Candidate>(null,"Kimlik No zaten kayitli");
 		}
 		
@@ -91,14 +91,14 @@ public class CandidateManager implements CandidateService{
   }
 	
 	private boolean firstNameChecker(Candidate candidate) {
-		if(candidate.getFirst_name().isBlank() || candidate.getFirst_name() == null) {
+		if(candidate.getFirstName().isBlank() || candidate.getFirstName() == null) {
 			return false;
 		}
 		return true;
 	}
 	
 	private boolean lastNameChecker(Candidate candidate) {
-		if(candidate.getLast_name().isBlank() || candidate.getLast_name() == null) {
+		if(candidate.getLastName().isBlank() || candidate.getLastName() == null) {
 		  return false;
 		}
 		  return true;
@@ -120,14 +120,14 @@ public class CandidateManager implements CandidateService{
     }
 	
 	private boolean identityChecker(Candidate candidate) {
-		if(candidate.getIdentity_number().isBlank() || candidate.getIdentity_number() == null) {
+		if(candidate.getIdentityNumber().isBlank() || candidate.getIdentityNumber() == null) {
 		  return false;
 		}
 		  return true;
     }
 	
 	private boolean passwordChecker(Candidate candidate) {
-		if(candidate.getPassword().isBlank() || candidate.getIdentity_number() == null) {
+		if(candidate.getPassword().isBlank() || candidate.getIdentityNumber() == null) {
 		  return false;
 		}
 		  return true;

@@ -4,29 +4,17 @@ import java.util.Random;
 
 public class GeneratedRandomCode {
 
-    int length = 10;
- 
-    StringBuilder sb = new StringBuilder();
+	protected String getSaltString() {
+        String SALTCHARS = "ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890";
+        StringBuilder salt = new StringBuilder();
+        Random rnd = new Random();
+        while (salt.length() < 18) {
+            int index = (int) (rnd.nextFloat() * SALTCHARS.length());
+            salt.append(SALTCHARS.charAt(index));
+        }
+        String saltStr = salt.toString();
+        return saltStr;
 
-    Random random = new Random();
-    
-	String upperAlphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-    String lowerAlphabet = "abcdefghijklmnopqrstuvwxyz";
-    String numbers = "0123456789";
-
-    String alphaNumeric = upperAlphabet + lowerAlphabet + numbers;
-
-
-    for(int i = 0; i < length; i++) {
-
-      int index = random.nextInt(alphaNumeric.length());
-
-      char randomChar = alphaNumeric.charAt(index);
-
-      sb.append(randomChar);
-      
-      String randomString = sb.toString();
-      
-      return randomString;
     }
+    
 }

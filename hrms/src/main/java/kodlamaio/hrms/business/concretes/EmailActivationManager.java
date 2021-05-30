@@ -26,15 +26,15 @@ public class EmailActivationManager implements EmailActivationService{
 	public void generateCode(EmailActivation code, Integer id) {
 		
 		EmailActivation code_ = code;
-		code.setCode(null);
-		code.setConfirm(false);
-		if(code.isConfirm() == false) {
+		code_.setCode(null);
+		code_.setConfirm(false);
+		if(code_.isConfirm() == false) {
 			GeneratedRandomCode generator = new GeneratedRandomCode();
-			String code_create = generator.create();
-			code.setCode(code_create);
-			code.setUserId(id);
+			String code_create = generator.toString();
+			code_.setCode(code_create);
+			code_.setUserId(id);
 	
-			emailActivationDao.save(code);
+			emailActivationDao.save(code_);
 			
 		}
 		

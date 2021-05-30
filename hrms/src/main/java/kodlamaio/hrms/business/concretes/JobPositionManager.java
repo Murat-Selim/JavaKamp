@@ -9,7 +9,6 @@ import org.springframework.stereotype.Service;
 import kodlamaio.hrms.business.abstracts.JobPositionService;
 import kodlamaio.hrms.core.utilities.results.DataResult;
 import kodlamaio.hrms.core.utilities.results.ErrorDataResult;
-import kodlamaio.hrms.core.utilities.results.Result;
 import kodlamaio.hrms.core.utilities.results.SuccessDataResult;
 import kodlamaio.hrms.dataAccess.abstracts.JobPositionDao;
 import kodlamaio.hrms.entities.concretes.JobPosition;
@@ -32,9 +31,9 @@ public class JobPositionManager implements JobPositionService{
 	}
 
 	@Override
-	public Result add(JobPosition jobPosition) {
+	public DataResult<JobPosition> add(JobPosition jobPosition) {
 		
-		if(jobPositionDao.findByTitles(jobPosition.getJob_title()).stream().count() !=0 ) {
+		if(jobPositionDao.findByJobTitle(jobPosition.getJobTitle()).stream().count() !=0 ) {
 			return new ErrorDataResult<JobPosition>(null,"Böyle Bir İş Pozisyonu Zaten Kayıtlı");	
 		}
 		
@@ -43,8 +42,8 @@ public class JobPositionManager implements JobPositionService{
 	}
 
 	@Override
-	public List<JobPosition> findByTitles(String job_title) {
-		return this.jobPositionDao.findByTitles(job_title);
+	public List<JobPosition> findByJobTitle(String job_title) {
+		return this.jobPositionDao.findByJobTitle(job_title);
 	}
 
 	@Override
