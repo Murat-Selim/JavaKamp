@@ -1,7 +1,6 @@
 package kodlamaio.hrms.entities.concretes;
 
-import java.util.Date;
-
+import java.time.LocalDate;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -35,7 +34,7 @@ public class EmailActivation {
 	private boolean isConfirm;
 	
 	@Column(name="confirm_date")
-	private Date confirmDate;
+	private LocalDate confirmDate = LocalDate.now();
 	
 	
 	

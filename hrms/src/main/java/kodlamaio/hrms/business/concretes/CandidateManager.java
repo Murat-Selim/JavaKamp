@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service;
 import kodlamaio.hrms.business.abstracts.CandidateService;
 import kodlamaio.hrms.business.abstracts.EmailActivationService;
 import kodlamaio.hrms.business.abstracts.UserService;
-import kodlamaio.hrms.core.utilities.MernisValidation;
+import kodlamaio.hrms.core.adapters.MernisValidation;
 import kodlamaio.hrms.core.utilities.results.DataResult;
 import kodlamaio.hrms.core.utilities.results.ErrorDataResult;
 import kodlamaio.hrms.core.utilities.results.SuccessDataResult;
@@ -106,7 +106,7 @@ public class CandidateManager implements CandidateService{
 	
 
 	private boolean birthDateChecker(Candidate candidate) {
-		if(candidate.getDate_of_birth() == null) {
+		if(candidate.getDateOfBirth() == null) {
 		  return false;
 		}
 		  return true;
