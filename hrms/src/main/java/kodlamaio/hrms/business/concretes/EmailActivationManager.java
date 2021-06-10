@@ -4,7 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import kodlamaio.hrms.business.abstracts.EmailActivationService;
-import kodlamaio.hrms.core.GeneratedRandomCode;
+import kodlamaio.hrms.core.utilities.helpers.GeneratedRandomCode;
 import kodlamaio.hrms.core.utilities.results.ErrorDataResult;
 import kodlamaio.hrms.core.utilities.results.Result;
 import kodlamaio.hrms.core.utilities.results.SuccessDataResult;
@@ -44,11 +44,12 @@ public class EmailActivationManager implements EmailActivationService{
 	@Override
 	public Result verify(String Code, Integer id) {
 		
-		EmailActivation ref = emailActivationDao.findByUserId(id).get();
-		if(ref.getCode().equals(Code)) {
-			ref.setConfirm(true);
-			return  new SuccessDataResult<EmailActivation>(this.emailActivationDao.save(ref),"Başarılı");
+		EmailActivation active = emailActivationDao.findByUserId(id).get();
+		if(active.getCode().equals(Code)) {
+			active.setConfirm(true);
+			return new SuccessDataResult<EmailActivation>(this.emailActivationDao.save(active),"Başarılı");
 		}
+		
 		return  new ErrorDataResult<EmailActivation>(null,"Doğrulama Kodu Geçersiz");
 	}
 

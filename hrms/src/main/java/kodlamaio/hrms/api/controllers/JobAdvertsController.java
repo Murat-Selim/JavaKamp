@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -12,7 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 import kodlamaio.hrms.business.abstracts.JobAdvertService;
 import kodlamaio.hrms.core.utilities.results.DataResult;
 import kodlamaio.hrms.core.utilities.results.Result;
-import kodlamaio.hrms.entities.concretes.JobAdvert;
+import kodlamaio.hrms.entities.dtos.JobAdvertAddDto;
 import kodlamaio.hrms.entities.dtos.JobAdvertDto;
 
 @RestController
@@ -28,14 +29,20 @@ public class JobAdvertsController {
 	}
 	
 	@GetMapping("/getall")
-	public DataResult<List<JobAdvert>> getAll() {
+	public DataResult<List<JobAdvertDto>> getAll() {
 		return this.jobAdvertService.getAll();
 	}
 	
 	@PostMapping("/add")
-	public Result add(@RequestBody JobAdvert jobAdvert) {
-		return this.jobAdvertService.add(jobAdvert);
+	public Result add(@RequestBody JobAdvertAddDto jobAdvertAddDto) {
+		return this.jobAdvertService.add(jobAdvertAddDto);
 	}
+	
+	@PutMapping("/setActive")
+    public Result setActive(int id,boolean active)
+    {
+        return this.jobAdvertService.setActive(id,active);
+    }
 	
 	@GetMapping("/getByIsActive")
 	public DataResult<List<JobAdvertDto>> getByIsActive() {
@@ -51,4 +58,5 @@ public class JobAdvertsController {
 	public DataResult<List<JobAdvertDto>> getByIsActiveAndCompanyName(String companyName) {
 		return this.jobAdvertService.getByIsActiveAndCompanyName(companyName);
 	}
+	
 }

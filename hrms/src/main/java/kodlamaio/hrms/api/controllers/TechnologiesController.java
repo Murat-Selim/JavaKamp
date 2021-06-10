@@ -9,30 +9,30 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import kodlamaio.hrms.business.abstracts.CityService;
+import kodlamaio.hrms.business.abstracts.TechnologyService;
 import kodlamaio.hrms.core.utilities.results.DataResult;
 import kodlamaio.hrms.core.utilities.results.Result;
-import kodlamaio.hrms.entities.concretes.City;
+import kodlamaio.hrms.entities.dtos.TechnologyDto;
 
 @RestController
-@RequestMapping("/api/cities")
-public class CitiesController {
+@RequestMapping("/api/technology")
+public class TechnologiesController {
+	
+	private TechnologyService technologyService;
 
 	@Autowired
-	private CityService cityService;
-
-	@GetMapping("/getall")
-	public DataResult<List<City>> getAll() {
-
-		return this.cityService.getAll();
-
+	public TechnologiesController(TechnologyService technologyService) {
+		super();
+		this.technologyService = technologyService;
 	}
-
+	
+	@GetMapping("/getAll")
+	public DataResult<List<TechnologyDto>> getAll() {
+		return this.technologyService.getAll();
+	}
+	
 	@PostMapping("/add")
-	public Result add(@RequestBody City city) {
-
-		return this.cityService.add(city);
-
+	public Result add(@RequestBody TechnologyDto technologyDto) {
+		return this.technologyService.add(technologyDto);
 	}
-
 }
