@@ -1,6 +1,5 @@
 package kodlamaio.hrms.entities.dtos;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -17,9 +16,9 @@ public class JobAdvertDto {
 
 	@JsonProperty(access = Access.READ_ONLY)
 	private int id;
-	private String companyName;
+	private String employerCompanyName;
 	private String jobTitle;
 	private LocalDateTime applicationDeadline;
-	private LocalDate createdDate = LocalDate.now();
+	private LocalDateTime createdDate;
 	private int numberOfOpenPosition;
 }

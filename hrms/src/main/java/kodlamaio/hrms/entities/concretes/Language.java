@@ -34,7 +34,7 @@ public class Language {
 	@Column(name="level")
 	private char level;
 	
-	@ManyToOne()
+	@ManyToOne(targetEntity = Cv.class)
 	@JoinColumn(name="cv_id")
 	private Cv cv;
 	

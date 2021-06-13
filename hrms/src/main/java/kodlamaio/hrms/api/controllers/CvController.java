@@ -3,6 +3,7 @@ package kodlamaio.hrms.api.controllers;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -20,6 +21,7 @@ import kodlamaio.hrms.entities.dtos.CvDto;
 
 @RestController
 @RequestMapping("/api/cv")
+@CrossOrigin
 public class CvController {
 	
 	private CvService cvService;

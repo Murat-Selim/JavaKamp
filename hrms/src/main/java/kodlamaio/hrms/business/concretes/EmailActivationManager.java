@@ -50,6 +50,10 @@ public class EmailActivationManager implements EmailActivationService{
 			return new SuccessDataResult<EmailActivation>(this.emailActivationDao.save(active),"Başarılı");
 		}
 		
+		else if(active.isConfirm() == true) {
+			return  new ErrorDataResult<EmailActivation>(null,"Zaten Doğrulanmış Hesap");
+		}
+		
 		return  new ErrorDataResult<EmailActivation>(null,"Doğrulama Kodu Geçersiz");
 	}
 

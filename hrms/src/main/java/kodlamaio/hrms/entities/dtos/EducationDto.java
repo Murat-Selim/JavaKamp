@@ -11,11 +11,11 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class EducationDto {
 	
+	private int id;
 	private int cvId;
 	private int graduateId;
-	private String description;
 	private String schoolName;
-	private String Department;
+	private String department;
 	private LocalDateTime startDate;
 	private LocalDateTime endDate;
 	

@@ -1,6 +1,5 @@
 package kodlamaio.hrms.entities.concretes;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 import javax.persistence.Column;
@@ -41,7 +40,7 @@ public class JobAdvert {
     private int numberOfOpenPosition;
 
 	@Column(name = "created_date")
-	private LocalDate createdDate = LocalDate.now();
+	private LocalDateTime createdDate;
 
 	@Column(name = "min_salary")
 	private Double minSalary;
