@@ -18,8 +18,13 @@ import kodlamaio.hrms.entities.concretes.City;
 @RequestMapping("/api/cities")
 public class CitiesController {
 
-	@Autowired
 	private CityService cityService;
+	
+	@Autowired
+	public CitiesController(CityService cityService) {
+		super();
+		this.cityService = cityService;
+	}
 
 	@GetMapping("/getall")
 	public DataResult<List<City>> getAll() {
