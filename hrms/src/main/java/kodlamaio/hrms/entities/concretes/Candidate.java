@@ -1,6 +1,6 @@
 package kodlamaio.hrms.entities.concretes;
 
-import java.time.LocalDateTime;
+import java.sql.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -29,6 +29,6 @@ public class Candidate extends User{
      private String identityNumber;
 	 
 	 @Column(name="date_of_birth")
-     private LocalDateTime dateOfBirth;
+     private Date dateOfBirth;
 	 
 }

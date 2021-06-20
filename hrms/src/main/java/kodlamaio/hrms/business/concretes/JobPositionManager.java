@@ -1,15 +1,17 @@
 package kodlamaio.hrms.business.concretes;
 
 import java.util.List;
-import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import kodlamaio.hrms.business.abstracts.JobPositionService;
+import kodlamaio.hrms.business.constants.Messages;
 import kodlamaio.hrms.core.utilities.results.DataResult;
-import kodlamaio.hrms.core.utilities.results.ErrorDataResult;
+import kodlamaio.hrms.core.utilities.results.ErrorResult;
+import kodlamaio.hrms.core.utilities.results.Result;
 import kodlamaio.hrms.core.utilities.results.SuccessDataResult;
+import kodlamaio.hrms.core.utilities.results.SuccessResult;
 import kodlamaio.hrms.dataAccess.abstracts.JobPositionDao;
 import kodlamaio.hrms.entities.concretes.JobPosition;
 
@@ -31,24 +33,21 @@ public class JobPositionManager implements JobPositionService{
 	}
 
 	@Override
-	public DataResult<JobPosition> add(JobPosition jobPosition) {
+	public Result add(JobPosition jobPosition) {
 		
 		if(jobPositionDao.findByJobTitle(jobPosition.getJobTitle()).stream().count() !=0 ) {
-			return new ErrorDataResult<JobPosition>(null,"Böyle Bir İş Pozisyonu Zaten Kayıtlı");	
+			return new ErrorResult(Messages.alreadyRegisteredJobTitle);	
 		}
 		
-		return new SuccessDataResult<JobPosition>(this.jobPositionDao.save(jobPosition),"Başarıyla İş Pozisyonu Eklendi");
+		this.jobPositionDao.save(jobPosition);
+		return new SuccessResult("Başarıyla İş Pozisyonu Eklendi");
 		
 	}
 
 	@Override
-	public List<JobPosition> findByJobTitle(String job_title) {
-		return this.jobPositionDao.findByJobTitle(job_title);
+	public DataResult<List<JobPosition>> findByJobTitle(String jobTitle) {
+		return new SuccessDataResult<List<JobPosition>>(this.jobPositionDao.findByJobTitle(jobTitle), "Data listelendi");
 	}
 
-	@Override
-	public Optional<JobPosition> findById(Integer id) {
-		return this.jobPositionDao.findById(id);
-	}
 
 }

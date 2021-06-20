@@ -1,7 +1,7 @@
 package kodlamaio.hrms.entities.dtos;
 
 
-import java.time.LocalDateTime;
+import java.sql.Date;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -15,12 +15,14 @@ public class JobAdvertAddDto {
 	private int id;
 	private String jobDescription;
     private int numberOfOpenPosition;
-	private LocalDateTime createdDate;
-	private LocalDateTime applicationDeadline;
+	private Date createdDate;
+	private Date applicationDeadline;
 	private Double minSalary;
 	private Double maxSalary;
 	private boolean isActive;
 	private int cityId;
 	private int jobPositionId;
 	private int employerId;
+	private int workTimeId;
+	private int workPlaceId;
 }

@@ -1,6 +1,6 @@
 package kodlamaio.hrms.entities.concretes;
 
-import java.time.LocalDateTime;
+import java.sql.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -38,10 +38,10 @@ public class Education {
 	
 	
 	@Column(name="start_date")
-	private LocalDateTime startDate; 
+	private Date startDate; 
 	
 	@Column(name="end_date")
-	private LocalDateTime endDate;
+	private Date endDate;
 	
 	@ManyToOne()
 	@JoinColumn(name="cv_id")

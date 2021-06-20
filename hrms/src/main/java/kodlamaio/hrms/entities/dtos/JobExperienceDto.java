@@ -1,6 +1,6 @@
 package kodlamaio.hrms.entities.dtos;
 
-import java.time.LocalDateTime;
+import java.sql.Date;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -14,6 +14,6 @@ public class JobExperienceDto {
 	private int cvId;
 	private int jobPositionId;
 	private String companyName;
-	private LocalDateTime startDate;
-	private LocalDateTime exitDate;
+	private Date startDate;
+	private Date exitDate;
 }

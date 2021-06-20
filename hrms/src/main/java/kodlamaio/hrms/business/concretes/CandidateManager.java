@@ -10,10 +10,14 @@ import org.springframework.stereotype.Service;
 import kodlamaio.hrms.business.abstracts.CandidateService;
 import kodlamaio.hrms.business.abstracts.EmailActivationService;
 import kodlamaio.hrms.business.abstracts.UserService;
+import kodlamaio.hrms.business.constants.Messages;
 import kodlamaio.hrms.core.adapters.MernisValidation;
+import kodlamaio.hrms.core.utilities.business.BusinessRules;
 import kodlamaio.hrms.core.utilities.results.DataResult;
-import kodlamaio.hrms.core.utilities.results.ErrorDataResult;
+import kodlamaio.hrms.core.utilities.results.ErrorResult;
+import kodlamaio.hrms.core.utilities.results.Result;
 import kodlamaio.hrms.core.utilities.results.SuccessDataResult;
+import kodlamaio.hrms.core.utilities.results.SuccessResult;
 import kodlamaio.hrms.dataAccess.abstracts.CandidateDao;
 import kodlamaio.hrms.entities.concretes.Candidate;
 import kodlamaio.hrms.entities.concretes.EmailActivation;
@@ -40,110 +44,103 @@ public class CandidateManager implements CandidateService{
 	}
 
 	@Override
-	public DataResult<Candidate> add(Candidate candidate) {
+	public Result add(Candidate candidate) {
 		
-		if(!firstNameChecker(candidate)) {
-			return new ErrorDataResult<Candidate>(null,"Ad Bilgisi Doldurulmak Zorundadır");
+		Result result = BusinessRules.run(firstNameChecker(candidate), lastNameChecker(candidate), 
+				        birthDateChecker(candidate), emailChecker(candidate),
+				        identityChecker(candidate), passwordChecker(candidate),
+				        isRealEmail(candidate), isEmailExist(candidate),
+				        isIdentityNumberExist(candidate), isRealPerson(candidate)
+				        );
+		
+		if(!result.isSuccess()) {
+			return new ErrorResult(result.getMessage());
 		}
 		
-		else if(!lastNameChecker(candidate)) {
-			return new ErrorDataResult<Candidate>(null,"Soyad Bilgisi Doldurulmak Zorundadir");
-		}
-		
-		else if(!birthDateChecker(candidate)) {
-			return new ErrorDataResult<Candidate>(null,"Dogum Bilgisi Doldurulmak Zorundadir");
-		}
-		
-		else if(!emailChecker(candidate)) {
-			return new ErrorDataResult<Candidate>(null,"Email Bilgisi Doldurulmak Zorundadir");
-		}
-		
-		else if(!identityChecker(candidate)) {
-			return new ErrorDataResult<Candidate>(null,"Kimlik Bilgisi Doldurulmak Zorundadir");
-		}
-		
-		
-		else if(!MernisValidation.isRealPerson(candidate.getIdentityNumber())) {
-			return new ErrorDataResult<Candidate>(null,"Kimlik Doğrulanamadı");
-		}
-		
-		else if(!passwordChecker(candidate)) {
-			return new ErrorDataResult<Candidate>(null,"Sifre Bilgisi Doldurulmak Zorundadir");
-		}
-		
-		else if(!isRealEmail(candidate)) {
-			return new ErrorDataResult<Candidate>(null,"Email dogrulanamadi");
-		}
-		
-		else if(candidateDao.findAllByEmail(candidate.getEmail()).stream().count() != 0) {
-			return new ErrorDataResult<Candidate>(null,"Email Zaten Kayitli");
-		}
-		
-		else if(candidateDao.findAllByIdentityNumber(candidate.getIdentityNumber()).stream().count() != 0) {
-			return new ErrorDataResult<Candidate>(null,"Kimlik No zaten kayitli");
-		}
-		
-		User savedUser = this.userService.add(candidate);
-		this.emailActivationService.generateCode(new EmailActivation(),savedUser.getId());
+		User user = this.userService.add(candidate);
+		this.emailActivationService.generateCode(new EmailActivation(),user.getId());
 		return new SuccessDataResult<Candidate>(this.candidateDao.save(candidate),"İş Arayan Hesabı Eklendi , Doğrulama Kodu Gönderildi:" + candidate.getId());
 				
 
   }
 	
-	private boolean firstNameChecker(Candidate candidate) {
+	private Result firstNameChecker(Candidate candidate) {
 		if(candidate.getFirstName().isBlank() || candidate.getFirstName() == null) {
-			return false;
+			return new ErrorResult(Messages.requiredFirstName);
 		}
-		return true;
+		return new SuccessResult();
 	}
 	
-	private boolean lastNameChecker(Candidate candidate) {
+	private Result lastNameChecker(Candidate candidate) {
 		if(candidate.getLastName().isBlank() || candidate.getLastName() == null) {
-		  return false;
+			return new ErrorResult(Messages.requiredLastName);
 		}
-		  return true;
+		return new SuccessResult();
     }
 	
 
-	private boolean birthDateChecker(Candidate candidate) {
+	private Result birthDateChecker(Candidate candidate) {
 		if(candidate.getDateOfBirth() == null) {
-		  return false;
+			return new ErrorResult(Messages.requiredBirthDate);
 		}
-		  return true;
+		return new SuccessResult();
     }
 	
-	private boolean emailChecker(Candidate candidate) {
+	private Result emailChecker(Candidate candidate) {
 		if(candidate.getEmail().isBlank() || candidate.getEmail() == null) {
-		  return false;
+			return new ErrorResult(Messages.requiredEmail);
 		}
-		  return true;
+		return new SuccessResult();
     }
 	
-	private boolean identityChecker(Candidate candidate) {
+	private Result identityChecker(Candidate candidate) {
 		if(candidate.getIdentityNumber().isBlank() || candidate.getIdentityNumber() == null) {
-		  return false;
+			return new ErrorResult(Messages.requiredIdentity);
 		}
-		  return true;
+		return new SuccessResult();
     }
 	
-	private boolean passwordChecker(Candidate candidate) {
+	private Result passwordChecker(Candidate candidate) {
 		if(candidate.getPassword().isBlank() || candidate.getIdentityNumber() == null) {
-		  return false;
+			return new ErrorResult(Messages.requiredPassword);
 		}
-		  return true;
+		return new SuccessResult();
     }
 	
-	private boolean isRealEmail(Candidate candidate) {
+	private Result isRealEmail(Candidate candidate) {
 		 String regex = "^(.+)@(.+)$";
 	     Pattern pattern = Pattern.compile(regex);
 	     Matcher matcher = pattern.matcher(candidate.getEmail());
 	     if(!matcher.matches()) {
-	    	 return false;
+	    	 return new ErrorResult(Messages.notRealEmail);
 	     }
-	     return true;
+	     return new SuccessResult();
 	     
 	}
 	
+	private Result isEmailExist(Candidate candidate) {
+
+		if (candidateDao.findAllByEmail(candidate.getEmail()).stream().count() != 0) {
+			return new ErrorResult(Messages.alreadyRegisteredEmail);
+		}
+		return new SuccessResult();
+	}
+
+	private Result isIdentityNumberExist(Candidate candidate) {
+		if (candidateDao.findAllByIdentityNumber(candidate.getIdentityNumber()).stream().count() != 0) {
+			return new ErrorResult(Messages.alreadyRegisteredIdentity);
+		}
+		return new SuccessResult();
+	}
+
+	private Result isRealPerson(Candidate candidate) {
+		if (!MernisValidation.isRealPerson(candidate.getIdentityNumber())) {
+
+			return new ErrorResult(Messages.notRealPerson);
+		}
+		return new SuccessResult();
+
+	}
 	
 }
 	

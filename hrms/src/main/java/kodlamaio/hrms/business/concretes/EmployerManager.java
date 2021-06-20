@@ -10,9 +10,13 @@ import org.springframework.stereotype.Service;
 import kodlamaio.hrms.business.abstracts.EmailActivationService;
 import kodlamaio.hrms.business.abstracts.EmployerService;
 import kodlamaio.hrms.business.abstracts.UserService;
+import kodlamaio.hrms.business.constants.Messages;
+import kodlamaio.hrms.core.utilities.business.BusinessRules;
 import kodlamaio.hrms.core.utilities.results.DataResult;
-import kodlamaio.hrms.core.utilities.results.ErrorDataResult;
+import kodlamaio.hrms.core.utilities.results.ErrorResult;
+import kodlamaio.hrms.core.utilities.results.Result;
 import kodlamaio.hrms.core.utilities.results.SuccessDataResult;
+import kodlamaio.hrms.core.utilities.results.SuccessResult;
 import kodlamaio.hrms.dataAccess.abstracts.EmployerDao;
 import kodlamaio.hrms.entities.concretes.EmailActivation;
 import kodlamaio.hrms.entities.concretes.Employer;
@@ -39,92 +43,73 @@ public class EmployerManager implements EmployerService{
 	}
 
 	@Override
-	public DataResult<Employer> add(Employer employer) {
+	public Result add(Employer employer) {
 		
-		if(!companyNameChecker(employer)) {
-			new ErrorDataResult<Employer>(null, "Sirket bilgisi doldurulmak zorundadir");
+		Result result = BusinessRules.run(companyNameChecker(employer), webAddressChecker(employer),
+				        emailChecker(employer), passwordChecker(employer),
+				        isRealEmail(employer), isRealPhoneNumber(employer),
+				        isEmailExist(employer)
+				        );
+		
+		if(!result.isSuccess()) {
+			return new ErrorResult(result.getMessage());
 		}
 		
-		else if(!webAddressChecker(employer)) {
-			new ErrorDataResult<Employer>(null, "Web site bilgisi doldurulmak zorundadir");
-		}
-		
-		else if(!emailChecker(employer)) {
-			new ErrorDataResult<Employer>(null, "E-mail bilgisi doldurulmak zorundadir");
-		}
-		
-
-		else if(!passwordChecker(employer)) {
-			new ErrorDataResult<Employer>(null, "Sifre bilgisi doldurulmak zorundadir");
-		}
-		
-		else if(!isRealEmail(employer)) {
-			new ErrorDataResult<Employer>(null, "E-mail dogrulanamadi");
-		}
-		
-		else if(!isRealPhoneNumber(employer)) {
-			new ErrorDataResult<Employer>(null, "Geçersiz Telefon Numarası Lütfen Tekrar Deneyin");
-		}
-		
-		else if(employerDao.findAllByEmail(employer.getEmail()).stream().count() !=0) {
-			new ErrorDataResult<Employer>(null, "E-mail adresi zaten kayitli");
-		}
-		
-		User savedUser = this.userService.add(employer);
-		this.emailActivationService.generateCode(new EmailActivation(),savedUser.getId());
+		User user = this.userService.add(employer);
+		this.emailActivationService.generateCode(new EmailActivation(),user.getId());
 		return new SuccessDataResult<Employer>(this.employerDao.save(employer),"İş Veren Hesabı Eklendi , Doğrulama Kodu Gönderildi:" + employer.getId());
 		
 		
 		
 	}
 	
-	private boolean companyNameChecker(Employer employer) {
+	private Result companyNameChecker(Employer employer) {
 		
 		if(employer.getCompanyName().isBlank() || employer.getCompanyName() == null) {
-			return false;
+			return new ErrorResult(Messages.requiredCompanyName);
 		}
-		return true;
+		return new SuccessResult();
 	}
 	
-   private boolean webAddressChecker(Employer employer) {
+   private Result webAddressChecker(Employer employer) {
 		
 		if(employer.getWebAddress().isBlank() || employer.getWebAddress() == null) {
-			return false;
+			return new ErrorResult(Messages.requiredWebAddress);
 		}
-		return true;
+		return new SuccessResult();
 	}
    
-   private boolean emailChecker(Employer employer) {
+   private Result emailChecker(Employer employer) {
 		
 		if(employer.getEmail().isBlank() || employer.getEmail() == null) {
-			return false;
+			return new ErrorResult(Messages.requiredEmail);
 		}
-		return true;
+		return new SuccessResult();
 	}
    
-   private boolean passwordChecker(Employer employer) {
+   private Result passwordChecker(Employer employer) {
 		
 		if(employer.getPassword().isBlank() || employer.getPassword() == null) {
-			return false;
+			return new ErrorResult(Messages.requiredPassword);
 		}
-		return true;
+		return new SuccessResult();
 	}
    
-   private boolean isRealEmail(Employer employer) {
+   private Result isRealEmail(Employer employer) {
 		 String regex = "^(.+)@(.+)$";
 	     Pattern pattern = Pattern.compile(regex);
 	     Matcher matcher = pattern.matcher(employer.getEmail());
 	     if(!matcher.matches()) {
-	    	 return false;
+	    	 return new ErrorResult(Messages.notRealEmail);
 	     }
 	     else if (!employer.getEmail().contains(employer.getWebAddress())) {
-				return false;
+				return new ErrorResult();
 			}
-	     return true;
+	     return new SuccessResult();
 	     
 	}
    
-   private boolean isRealPhoneNumber(Employer employer) {
+   private Result isRealPhoneNumber(Employer employer) {
 		String patterns = "^(\\+\\d{1,3}( )?)?((\\(\\d{3}\\))|\\d{3})[- .]?\\d{3}[- .]?\\d{4}$"
 				+ "|^(\\+\\d{1,3}( )?)?(\\d{3}[ ]?){2}\\d{3}$"
 				+ "|^(\\+\\d{1,3}( )?)?(\\d{3}[ ]?)(\\d{2}[ ]?){2}\\d{2}$";
@@ -132,9 +117,17 @@ public class EmployerManager implements EmployerService{
 		Pattern pattern = Pattern.compile(patterns);
 		Matcher matcher = pattern.matcher(employer.getPhoneNumber());
 		if (!matcher.matches()) {
-			return false;
+			return new ErrorResult(Messages.invalidPhoneNumber);
 		}
-		return true;
+		return new SuccessResult();
+	}
+   
+   private Result isEmailExist(Employer employer) {
+		
+		if(employerDao.findAllByEmail(employer.getEmail()).stream().count() !=0) {
+			return new ErrorResult(Messages.alreadyRegisteredEmail);
+		}
+		return new SuccessResult();
 	}
    
 }

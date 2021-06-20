@@ -1,6 +1,6 @@
 package kodlamaio.hrms.entities.concretes;
 
-import java.time.LocalDateTime;
+import java.sql.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -32,15 +32,15 @@ public class JobAdvert {
 
 	@Column(name = "job_description")
 	private String jobDescription;
-
-	@Column(name = "application_deadline")
-	private LocalDateTime applicationDeadline;
 	
 	@Column(name="number_of_open_position")
     private int numberOfOpenPosition;
 
+	@Column(name = "application_deadline")
+	private Date applicationDeadline;
+
 	@Column(name = "created_date")
-	private LocalDateTime createdDate;
+	private Date createdDate;
 
 	@Column(name = "min_salary")
 	private Double minSalary;
@@ -62,5 +62,13 @@ public class JobAdvert {
 	@ManyToOne
 	@JoinColumn(name = "employer_id")
 	private Employer employer;
+	
+	@ManyToOne
+	@JoinColumn(name = "workTime_id")
+	private WorkTime workTime;
+	
+	@ManyToOne
+	@JoinColumn(name = "workPlace_id")
+	private WorkPlace workPlace;
 
 }

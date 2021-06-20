@@ -2,32 +2,29 @@ package kodlamaio.hrms.api.controllers;
 
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import kodlamaio.hrms.business.abstracts.UserService;
+import kodlamaio.hrms.business.abstracts.WorkTimeService;
 import kodlamaio.hrms.core.utilities.results.DataResult;
-import kodlamaio.hrms.entities.concretes.User;
+import kodlamaio.hrms.entities.concretes.WorkTime;
 
 @RestController
-@RequestMapping("/api/users")
+@RequestMapping("/api/worktimes")
 @CrossOrigin
-public class UsersController {
+public class WorkTimesController {
 
-	private UserService userService;
+	private WorkTimeService workTimeService;
 
-	@Autowired 
-	public UsersController(UserService userService) {
+	public WorkTimesController(WorkTimeService workTimeService) {
 		super();
-		this.userService = userService;
+		this.workTimeService = workTimeService;
 	}
 	
 	@GetMapping("/getall")
-	public DataResult<List<User>> getAll() {
-		return this.userService.getAll();
+	public DataResult<List<WorkTime>> getAll(){
+		return this.workTimeService.getAll();
 	}
-	
 }

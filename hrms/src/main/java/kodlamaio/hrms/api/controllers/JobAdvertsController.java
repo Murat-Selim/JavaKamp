@@ -2,7 +2,10 @@ package kodlamaio.hrms.api.controllers;
 
 import java.util.List;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -36,8 +39,8 @@ public class JobAdvertsController {
 	}
 	
 	@PostMapping("/add")
-	public Result add(@RequestBody JobAdvertAddDto jobAdvertAddDto) {
-		return this.jobAdvertService.add(jobAdvertAddDto);
+	public ResponseEntity<?> add(@Valid @RequestBody JobAdvertAddDto jobAdvertAddDto) {
+		return ResponseEntity.ok(this.jobAdvertService.add(jobAdvertAddDto));
 	}
 	
 	@PutMapping("/setActive")

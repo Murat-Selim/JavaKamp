@@ -1,6 +1,6 @@
 package kodlamaio.hrms.entities.concretes;
 
-import java.time.LocalDateTime;
+import java.sql.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -34,10 +34,10 @@ public class JobExperience {
 	
 	@NotBlank
 	@Column(name="start_date")
-	private LocalDateTime startDate;
+	private Date startDate;
 	
 	@Column(name="exit_date")
-	private LocalDateTime exitDate;
+	private Date exitDate;
 	
 	@ManyToOne()
 	@JoinColumn(name="jobPosition_id")
