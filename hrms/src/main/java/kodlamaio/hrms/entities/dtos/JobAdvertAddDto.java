@@ -1,7 +1,9 @@
 package kodlamaio.hrms.entities.dtos;
 
 
-import java.sql.Date;
+import java.time.LocalDate;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -15,8 +17,10 @@ public class JobAdvertAddDto {
 	private int id;
 	private String jobDescription;
     private int numberOfOpenPosition;
-	private Date createdDate;
-	private Date applicationDeadline;
+    @JsonFormat(pattern="yyyy-MM-dd")
+	private LocalDate createdDate;
+    @JsonFormat(pattern="yyyy-MM-dd")
+	private LocalDate applicationDeadline;
 	private Double minSalary;
 	private Double maxSalary;
 	private boolean isActive;

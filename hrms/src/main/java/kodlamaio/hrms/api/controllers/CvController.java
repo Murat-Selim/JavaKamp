@@ -45,6 +45,11 @@ public class CvController {
 		return ResponseEntity.ok(this.cvService.add(cvAddDto));
 	}
 	
+	@PutMapping("/update")
+	public Result update(CvDto cvDto) {
+		return this.cvService.update(cvDto);
+	}
+	
 	@GetMapping("/findAllByCandidateId")
 	public DataResult<List<CvDto>> findAllByCandidateId(int id) {
 		return this.cvService.findAllByCandidateId(id);

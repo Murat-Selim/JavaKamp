@@ -58,10 +58,39 @@ public class EmployerManager implements EmployerService{
 		User user = this.userService.add(employer);
 		this.emailActivationService.generateCode(new EmailActivation(),user.getId());
 		return new SuccessDataResult<Employer>(this.employerDao.save(employer),"İş Veren Hesabı Eklendi , Doğrulama Kodu Gönderildi:" + employer.getId());
-		
-		
-		
+				
 	}
+	
+	@Override
+	public Result update(Employer employer) {
+		this.employerDao.save(employer);
+		return new SuccessResult("Data guncellendi");
+	}
+	
+	@Override
+	public Result updateChangeActive(int userId) {
+        employerDao.updateChangeActive(userId);
+		return new SuccessResult("Kullanıcı onay durumu onaylandi");
+	}
+	
+	@Override
+	public Result updateChangeFalse(int userId) {
+        employerDao.updateChangeFalse(userId);
+		return new SuccessResult("Kullanıcı onaylanmadi");
+	}
+	
+	@Override
+	public DataResult<List<Employer>> getAllByNotActive() {
+		return new SuccessDataResult<List<Employer>>(this.employerDao.getAllByNotActive());
+	}
+	
+	@Override
+	public DataResult<List<Employer>> getAllByIsActive() {
+		return new SuccessDataResult<List<Employer>>(this.employerDao.getAllByIsActive());
+	}
+	
+	
+	
 	
 	private Result companyNameChecker(Employer employer) {
 		
@@ -129,5 +158,7 @@ public class EmployerManager implements EmployerService{
 		}
 		return new SuccessResult();
 	}
+
+
    
 }

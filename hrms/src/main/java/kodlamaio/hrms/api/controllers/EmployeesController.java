@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -36,5 +37,10 @@ public class EmployeesController {
 	@PostMapping("/add")
 	public Result add(@RequestBody Employee employee) {
 		return this.employeeService.add(employee);
+	}
+	
+	@PutMapping("/update")
+	public Result update(Employee employee) {
+		return this.employeeService.update(employee);
 	}
 }

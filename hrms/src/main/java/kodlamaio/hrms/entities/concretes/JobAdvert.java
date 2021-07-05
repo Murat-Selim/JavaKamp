@@ -1,6 +1,6 @@
 package kodlamaio.hrms.entities.concretes;
 
-import java.sql.Date;
+import java.time.LocalDate;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -12,6 +12,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
 import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -37,10 +39,12 @@ public class JobAdvert {
     private int numberOfOpenPosition;
 
 	@Column(name = "application_deadline")
-	private Date applicationDeadline;
+	@JsonFormat(pattern="yyyy-MM-dd")
+	private LocalDate applicationDeadline;
 
 	@Column(name = "created_date")
-	private Date createdDate;
+	@JsonFormat(pattern="yyyy-MM-dd")
+	private LocalDate createdDate;
 
 	@Column(name = "min_salary")
 	private Double minSalary;
@@ -51,23 +55,23 @@ public class JobAdvert {
 	@Column(name = "is_active")
 	private boolean isActive;
 
-	@ManyToOne
+	@ManyToOne()
 	@JoinColumn(name = "city_id")
 	private City city;
 
-	@ManyToOne
+	@ManyToOne()
 	@JoinColumn(name = "jobPosition_id")
 	private JobPosition jobPosition;
 
-	@ManyToOne
+	@ManyToOne()
 	@JoinColumn(name = "employer_id")
 	private Employer employer;
 	
-	@ManyToOne
+	@ManyToOne()
 	@JoinColumn(name = "workTime_id")
 	private WorkTime workTime;
 	
-	@ManyToOne
+	@ManyToOne()
 	@JoinColumn(name = "workPlace_id")
 	private WorkPlace workPlace;
 

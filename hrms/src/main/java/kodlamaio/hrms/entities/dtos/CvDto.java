@@ -1,6 +1,6 @@
 package kodlamaio.hrms.entities.dtos;
 
-import java.sql.Date;
+import java.time.LocalDate;
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -28,8 +28,8 @@ public class CvDto {
 	private String linkedinLink;
 	private String image;
 	private String description;
-	private Date createdDate;
-	private Date updatedDate;
+	private LocalDate createdDate;
+	private LocalDate updatedDate;
 	private List<JobExperience> jobExperiences;
 	private List<Language> languages;
 	private List<Technology> technologies;

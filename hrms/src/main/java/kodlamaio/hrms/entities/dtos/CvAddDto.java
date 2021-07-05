@@ -1,7 +1,7 @@
 package kodlamaio.hrms.entities.dtos;
 
 
-import java.sql.Date;
+import java.time.LocalDate;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -17,8 +17,8 @@ public class CvAddDto {
 	private String linkedinLink;
 	private String image;
 	private String description;
-	private Date createdDate;
-	private Date updatedDate;
+	private LocalDate createdDate;
+	private LocalDate updatedDate;
 	
 
 }

@@ -16,7 +16,7 @@ import kodlamaio.hrms.core.utilities.results.Result;
 import kodlamaio.hrms.entities.dtos.JobExperienceDto;
 
 @RestController
-@RequestMapping("/api/jobexperiences")
+@RequestMapping("/api/jobExperiences")
 @CrossOrigin
 public class JobExperiencesController {
 	

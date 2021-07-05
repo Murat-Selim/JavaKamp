@@ -35,6 +35,10 @@ public class CvManager implements CvService {
 		
 	}
 	
+	@Override
+	public DataResult<List<CvDto>> getAll(){
+		return new SuccessDataResult<List<CvDto>>(dtoConverterService.dtoConverter(cvDao.findAll(), CvDto.class), "'Cv'ler başarıyla listelendi.");
+	}
 	
 	@Override
 	public Result add(CvAddDto cvAddDto) {
@@ -44,8 +48,9 @@ public class CvManager implements CvService {
 	}
 	
 	@Override
-	public DataResult<List<CvDto>> getAll(){
-		return new SuccessDataResult<List<CvDto>>(dtoConverterService.dtoConverter(cvDao.findAll(), CvDto.class), "'Cv'ler başarıyla listelendi.");
+	public Result update(CvDto cvDto) {
+		this.cvDao.save((Cv) dtoConverterService.dtoClassConverter(cvDto, Cv.class));
+		return new SuccessResult("Cv Başarıyla güncellendi.");
 	}
 
 

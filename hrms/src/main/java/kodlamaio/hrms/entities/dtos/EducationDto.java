@@ -1,6 +1,6 @@
 package kodlamaio.hrms.entities.dtos;
 
-import java.sql.Date;
+import java.time.LocalDate;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -16,8 +16,8 @@ public class EducationDto {
 	private int graduateId;
 	private String schoolName;
 	private String department;
-	private Date startDate;
-	private Date endDate;
+	private LocalDate startDate;
+	private LocalDate endDate;
 	
 
 }

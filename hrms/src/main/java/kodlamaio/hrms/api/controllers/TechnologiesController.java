@@ -16,7 +16,7 @@ import kodlamaio.hrms.core.utilities.results.Result;
 import kodlamaio.hrms.entities.dtos.TechnologyDto;
 
 @RestController
-@RequestMapping("/api/technology")
+@RequestMapping("/api/technologies")
 @CrossOrigin
 public class TechnologiesController {
 	

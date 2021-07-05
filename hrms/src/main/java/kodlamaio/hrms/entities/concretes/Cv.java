@@ -1,6 +1,6 @@
 package kodlamaio.hrms.entities.concretes;
 
-import java.sql.Date;
+import java.time.LocalDate;
 import java.util.List;
 
 import javax.persistence.Column;
@@ -46,10 +46,10 @@ public class Cv {
 	private String image;
 	
 	@Column(name="created_date")
-	private Date createdDate;
+	private LocalDate createdDate;
 	
 	@Column(name="updated_date")
-	private Date updatedDate;
+	private LocalDate updatedDate;
 	
 	@Column(name="is_active")
 	private boolean isActive;

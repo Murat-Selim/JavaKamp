@@ -41,8 +41,13 @@ public class JobAdvertManager implements JobAdvertService{
 	}
 	
 	@Override
-	public DataResult<List<JobAdvertDto>> getByIsActive() {
-		return new SuccessDataResult<List<JobAdvertDto>>(this.jobAdvertDao.getIsActive());
+	public DataResult<List<JobAdvertDto>> getAllByIsActive() {
+		return new SuccessDataResult<List<JobAdvertDto>>(this.jobAdvertDao.getAllByIsActive());
+	}
+	
+	@Override
+	public DataResult<List<JobAdvertDto>> getAllByNotActive() {
+		return new SuccessDataResult<List<JobAdvertDto>>(this.jobAdvertDao.getAllByNotActive());
 	}
 
 	@Override
@@ -56,11 +61,20 @@ public class JobAdvertManager implements JobAdvertService{
 	}
 
 	@Override
-	public Result setActive(int id, boolean active) {
-		JobAdvert value = this.jobAdvertDao.getOne(id);
-		value.setActive(active);
-		this.jobAdvertDao.save(value);
-		return new SuccessResult("Is ilani pasif edildi");
+	public Result updateChangeActive(int userId) {
+        jobAdvertDao.updateChangeActive(userId);
+		return new SuccessResult("Kullanıcı onay durumu onaylandi");
+	}
+	
+	@Override
+	public Result updateChangeFalse(int userId) {
+        jobAdvertDao.updateChangeFalse(userId);
+		return new SuccessResult("Kullanıcı onaylanmadi");
+	}
+
+	@Override
+	public DataResult<JobAdvert> getById(int id) {
+			return new SuccessDataResult<JobAdvert>(this.jobAdvertDao.findById(id),"Data listelendi");
 	}
 
 }

@@ -12,6 +12,7 @@ import kodlamaio.hrms.entities.dtos.CvDto;
 public interface CvService {
 
     Result add(CvAddDto cvAddDto);
+    Result update(CvDto cvDto);
 	DataResult<List<CvDto>> getAll();
 	DataResult<List<CvDto>> findAllByCandidateId(int id);
 	Result saveImage(MultipartFile file, int cvId);

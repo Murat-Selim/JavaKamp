@@ -2,6 +2,7 @@ package kodlamaio.hrms.entities.concretes;
 
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.OneToMany;
@@ -33,7 +34,10 @@ public class Employer extends User{
 	 @Column(name="phone_number")
      private String phoneNumber;
 	 
-	 @OneToMany(mappedBy = "employer")
+	 @Column(name="is_activated")
+	 private boolean isActivated;
+	 
+	 @OneToMany(mappedBy = "employer", cascade = CascadeType.ALL)
 	   private List<JobAdvert> jobAdverts;
 	
 }

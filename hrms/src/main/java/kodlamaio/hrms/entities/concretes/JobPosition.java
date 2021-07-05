@@ -2,6 +2,7 @@ package kodlamaio.hrms.entities.concretes;
 
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -31,6 +32,6 @@ public class JobPosition {
    @Column(name="job_title")
    private String jobTitle;
    
-   @OneToMany(mappedBy = "jobPosition")
+   @OneToMany(mappedBy = "jobPosition", cascade = CascadeType.ALL)
    private List<JobAdvert> jobAdverts;
 }

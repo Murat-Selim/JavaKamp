@@ -35,4 +35,10 @@ public class EmployeeManager implements EmployeeService{
 		return new SuccessResult("Sistem calisani basariyla eklendi");
 	}
 
+	@Override
+	public Result update(Employee employee) {
+		this.employeeDao.save(employee);
+		return new SuccessResult("Data guncellendi");
+	}
+
 }
