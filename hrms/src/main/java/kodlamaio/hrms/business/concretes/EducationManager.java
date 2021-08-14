@@ -30,13 +30,6 @@ public class EducationManager implements EducationService {
 
 
 	@Override
-	public Result add(EducationDto educationDto) {
-		
-		this.educationDao.save((Education) dtoConverterService.dtoClassConverter(educationDto, Education.class));
-		return new SuccessResult("Okul Başarıyla eklendi.");
-	}
-
-	@Override
 	public DataResult<List<EducationDto>> getAll() {
 		return new SuccessDataResult<List<EducationDto>>(dtoConverterService.dtoConverter(educationDao.findAll(), EducationDto.class), "Okullar Listelendi");
 		
@@ -46,6 +39,27 @@ public class EducationManager implements EducationService {
 	public DataResult<List<EducationDto>> findAllByOrderByEndDateDesc() {
 		return new SuccessDataResult<List<EducationDto>>(dtoConverterService.dtoConverter(educationDao.findAllByOrderByEndDateDesc(), EducationDto.class));
 	}
+	
+	@Override
+	public Result add(EducationDto educationDto) {
+		
+		this.educationDao.save((Education) dtoConverterService.dtoClassConverter(educationDto, Education.class));
+		return new SuccessResult("Eğitim Başarıyla eklendi.");
+	}
 
+
+	@Override
+	public Result update(EducationDto educationDto) {
+		
+		this.educationDao.save((Education) dtoConverterService.dtoClassConverter(educationDto, Education.class));
+		return new SuccessResult("Eğitim Başarıyla Güncellendi");
+	}
+
+	@Override
+	public Result delete(int id) {
+
+		this.educationDao.deleteById(id);
+		return new SuccessResult("Eğitim Başarıyla Silindi");
+	}
 }
 

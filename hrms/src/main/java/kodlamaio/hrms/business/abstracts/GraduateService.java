@@ -9,6 +9,8 @@ import kodlamaio.hrms.entities.concretes.Graduate;
 public interface GraduateService {
 
     DataResult<List<Graduate>> getAll();
-	
 	Result add(Graduate graduate);
+	Result update(Graduate graduate);
+	Result delete(int id);
+
 }

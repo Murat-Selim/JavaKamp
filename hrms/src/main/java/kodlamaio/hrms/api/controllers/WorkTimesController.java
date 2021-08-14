@@ -23,7 +23,7 @@ public class WorkTimesController {
 		this.workTimeService = workTimeService;
 	}
 	
-	@GetMapping("/getall")
+	@GetMapping("/getAll")
 	public DataResult<List<WorkTime>> getAll(){
 		return this.workTimeService.getAll();
 	}

@@ -1,10 +1,12 @@
 package kodlamaio.hrms.business.concretes;
 
-import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import kodlamaio.hrms.business.abstracts.CandidateService;
@@ -38,9 +40,9 @@ public class CandidateManager implements CandidateService{
 	}
 	
 	@Override
-	public DataResult<List<Candidate>> getAll() {
-		return new SuccessDataResult<List<Candidate>>(this.candidateDao.findAll(), "Data listelendi");
-	
+	public DataResult<Page<Candidate>> getAll(int pageNo, int pageSize) {
+		Pageable pageable = PageRequest.of(pageNo-1, pageSize);		
+		return new SuccessDataResult<Page<Candidate>>(this.candidateDao.findAll(pageable), "Data listelendi");
 	}
 
 	@Override

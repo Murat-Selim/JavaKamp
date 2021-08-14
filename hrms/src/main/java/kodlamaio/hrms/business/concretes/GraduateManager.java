@@ -10,6 +10,7 @@ import kodlamaio.hrms.core.utilities.results.DataResult;
 import kodlamaio.hrms.core.utilities.results.ErrorResult;
 import kodlamaio.hrms.core.utilities.results.Result;
 import kodlamaio.hrms.core.utilities.results.SuccessDataResult;
+import kodlamaio.hrms.core.utilities.results.SuccessResult;
 import kodlamaio.hrms.dataAccess.abstracts.GraduateDao;
 import kodlamaio.hrms.entities.concretes.Graduate;
 
@@ -35,7 +36,20 @@ public class GraduateManager implements GraduateService{
 		if(graduateDao.existsByDescription(graduate.getDescription())) {
 			return new ErrorResult("Bu eğitim derecesi zaten kayıtlı.");
 		}
-		return new SuccessDataResult<Graduate>(this.graduateDao.save(graduate), "Egitim derecesi başarıyla eklendi.");
+		this.graduateDao.save(graduate);
+		return new SuccessResult("Eğitim derecesi başarıyla eklendi.");
+	}
+
+	@Override
+	public Result update(Graduate graduate) {
+		this.graduateDao.save(graduate);
+		return new SuccessResult("Eğitim derecesi başarıyla güncellendi.");
+	}
+
+	@Override
+	public Result delete(int id) {
+		this.graduateDao.deleteById(id);
+		return new SuccessResult("Eğitim derecesi başarıyla silindi.");
 	}
 	
 	

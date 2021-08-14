@@ -5,6 +5,9 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import kodlamaio.hrms.business.abstracts.EmailActivationService;
@@ -37,8 +40,9 @@ public class EmployerManager implements EmployerService{
 	}
 	
 	@Override
-	public DataResult<List<Employer>> getAll() {
-		return new SuccessDataResult<List<Employer>>(this.employerDao.findAll(), "Data listelendi");
+	public DataResult<Page<Employer>> getAll(int pageNo, int pageSize) {
+		Pageable pageable = PageRequest.of(pageNo-1, pageSize);
+		return new SuccessDataResult<Page<Employer>>(this.employerDao.findAll(pageable), "Data listelendi");
 	
 	}
 
@@ -80,13 +84,20 @@ public class EmployerManager implements EmployerService{
 	}
 	
 	@Override
-	public DataResult<List<Employer>> getAllByNotActive() {
-		return new SuccessDataResult<List<Employer>>(this.employerDao.getAllByNotActive());
+	public DataResult<List<Employer>> getAllByNotActive(int pageNo, int pageSize) {
+		Pageable pageable = PageRequest.of(pageNo-1, pageSize);
+		return new SuccessDataResult<List<Employer>>(this.employerDao.getAllByNotActive(pageable));
 	}
 	
 	@Override
-	public DataResult<List<Employer>> getAllByIsActive() {
-		return new SuccessDataResult<List<Employer>>(this.employerDao.getAllByIsActive());
+	public DataResult<List<Employer>> getAllByIsActive(int pageNo, int pageSize) {
+		Pageable pageable = PageRequest.of(pageNo-1, pageSize);
+		return new SuccessDataResult<List<Employer>>(this.employerDao.getAllByIsActive(pageable));
+	}
+	
+	@Override
+	public DataResult<Employer> getById(int id) {
+		return new SuccessDataResult<Employer>(this.employerDao.getOne(id), "Employer detaylari getirildi");
 	}
 	
 	
@@ -158,7 +169,5 @@ public class EmployerManager implements EmployerService{
 		}
 		return new SuccessResult();
 	}
-
-
-   
+ 
 }

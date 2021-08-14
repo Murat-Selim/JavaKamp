@@ -38,6 +38,6 @@ public class Employer extends User{
 	 private boolean isActivated;
 	 
 	 @OneToMany(mappedBy = "employer", cascade = CascadeType.ALL)
-	   private List<JobAdvert> jobAdverts;
+	 private List<JobAdvert> jobAdverts;
 	
 }

@@ -9,6 +9,8 @@ import kodlamaio.hrms.entities.dtos.JobExperienceDto;
 public interface JobExperienceService {
 
 	Result add(JobExperienceDto jobExperienceDto);
+	Result update(JobExperienceDto jobExperienceDto);
+	Result delete(int id);
 	DataResult<List<JobExperienceDto>> getAll();
 	DataResult<List<JobExperienceDto>> findAllByOrderByExitDateDesc();
 }

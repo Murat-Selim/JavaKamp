@@ -9,9 +9,8 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class LanguageDto {
 	
+	private int id;
 	private int cvId;
 	private String language;
-	private char level;
-	
-
+	private char level;	
 }

@@ -10,7 +10,8 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class JobExperienceDto {
-
+	
+	private int id;
 	private int cvId;
 	private int jobPositionId;
 	private String companyName;

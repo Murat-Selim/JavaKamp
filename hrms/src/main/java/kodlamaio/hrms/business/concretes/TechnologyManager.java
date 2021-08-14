@@ -39,5 +39,17 @@ public class TechnologyManager implements TechnologyService{
 		return new SuccessDataResult<List<TechnologyDto>>
 		(dtoConverterService.dtoConverter(technologyDao.findAll(),TechnologyDto.class),"Teknoloji bilgisi başarıyla Listelendi");
 	}
+
+	@Override
+	public Result update(TechnologyDto technologyDto) {
+		technologyDao.save((Technology) dtoConverterService.dtoClassConverter(technologyDto, Technology.class));
+		return new SuccessResult("Başarıyla Güncellendi");
+	}
+
+	@Override
+	public Result delete(int id) {
+		this.technologyDao.deleteById(id);
+		return new SuccessResult("Başarıyla Silindi");
+	}
 	
 }

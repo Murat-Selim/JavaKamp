@@ -29,7 +29,7 @@ public class EmployeesController {
 		this.employeeService = employeeService;
 	}
 	
-	@GetMapping("/getall")
+	@GetMapping("/getAll")
 	public DataResult<List<Employee>> getAll() {
 		return this.employeeService.getAll();
 	}
@@ -40,7 +40,7 @@ public class EmployeesController {
 	}
 	
 	@PutMapping("/update")
-	public Result update(Employee employee) {
+	public Result update(@RequestBody Employee employee) {
 		return this.employeeService.update(employee);
 	}
 }

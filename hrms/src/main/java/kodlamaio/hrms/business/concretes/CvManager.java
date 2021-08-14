@@ -37,20 +37,20 @@ public class CvManager implements CvService {
 	
 	@Override
 	public DataResult<List<CvDto>> getAll(){
-		return new SuccessDataResult<List<CvDto>>(dtoConverterService.dtoConverter(cvDao.findAll(), CvDto.class), "'Cv'ler başarıyla listelendi.");
+		return new SuccessDataResult<List<CvDto>>(dtoConverterService.dtoConverter(cvDao.findAll(), CvDto.class), "'Cv'ler başarıyla listelendi");
 	}
 	
 	@Override
 	public Result add(CvAddDto cvAddDto) {
 		
 		this.cvDao.save((Cv) dtoConverterService.dtoClassConverter(cvAddDto, Cv.class));
-		return new SuccessResult("Cv Başarıyla eklendi.");
+		return new SuccessResult("Cv Başarıyla eklendi");
 	}
 	
 	@Override
-	public Result update(CvDto cvDto) {
-		this.cvDao.save((Cv) dtoConverterService.dtoClassConverter(cvDto, Cv.class));
-		return new SuccessResult("Cv Başarıyla güncellendi.");
+	public Result update(CvAddDto cvAddDto) {
+		this.cvDao.save((Cv) dtoConverterService.dtoClassConverter(cvAddDto, Cv.class));
+		return new SuccessResult("Cv Başarıyla güncellendi");
 	}
 
 
@@ -69,7 +69,13 @@ public class CvManager implements CvService {
 
 	@Override
 	public DataResult<List<CvDto>> findAllByCandidateId(int id) {
-		return new SuccessDataResult<List<CvDto>>(dtoConverterService.dtoConverter(cvDao.findAllByCandidateId(id), CvDto.class), "Is arayana gore listelendi.");
+		return new SuccessDataResult<List<CvDto>>(dtoConverterService.dtoConverter(cvDao.findAllByCandidateId(id), CvDto.class), "Is arayana gore listelendi");
 	}
+
+	@Override
+	public DataResult<Cv> getById(int id) {
+		return new SuccessDataResult<Cv>(this.cvDao.findById(id), "Cv detaylari getirildi");
+	}
+
 
 }

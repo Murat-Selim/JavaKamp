@@ -5,12 +5,14 @@ import java.util.List;
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import kodlamaio.hrms.business.abstracts.EmployerService;
@@ -31,9 +33,9 @@ public class EmployersController {
 		this.employerService = employerService;
 	}
 	
-	@GetMapping("/getall")
-	public DataResult<List<Employer>> getAll() {
-		return this.employerService.getAll();
+	@GetMapping("/getAll")
+	public DataResult<Page<Employer>> getAll(@RequestParam int pageNo, @RequestParam int pageSize) {
+		return this.employerService.getAll(pageNo, pageSize);
 	}
 	
 	@PostMapping("/add")
@@ -42,7 +44,7 @@ public class EmployersController {
 	}
 	
 	@PutMapping("/update")
-	public Result update(Employer employer) {
+	public Result update(@RequestBody Employer employer) {
 		return this.employerService.update(employer);
 	}
 	
@@ -59,14 +61,18 @@ public class EmployersController {
 	}
 	
 	@GetMapping("/getAllByIsActive")
-	public DataResult<List<Employer>> getAllByIsActive(){
-		return this.employerService.getAllByIsActive();
+	public DataResult<List<Employer>> getAllByIsActive(@RequestParam int pageNo, @RequestParam int pageSize) {
+		return this.employerService.getAllByIsActive(pageNo, pageSize);
 	}
 	
 	@GetMapping("/getAllByNotActive")
-	public DataResult<List<Employer>> getAllByNotActive(){
-		return this.employerService.getAllByNotActive();
+	public DataResult<List<Employer>> getAllByNotActive(@RequestParam int pageNo, @RequestParam int pageSize){
+		return this.employerService.getAllByNotActive(pageNo, pageSize);
 	}
 	
+	@GetMapping("/getById")
+	public DataResult<Employer> getById(@RequestParam int id) {
+		return this.employerService.getById(id);
+	}
 	
 }

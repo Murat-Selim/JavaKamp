@@ -6,6 +6,7 @@ import javax.transaction.Transactional;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -22,6 +23,7 @@ import kodlamaio.hrms.core.utilities.results.Result;
 import kodlamaio.hrms.entities.concretes.JobAdvert;
 import kodlamaio.hrms.entities.dtos.JobAdvertAddDto;
 import kodlamaio.hrms.entities.dtos.JobAdvertDto;
+import kodlamaio.hrms.entities.dtos.JobAdvertFilterDto;
 
 @RestController
 @RequestMapping("/api/jobAdverts")
@@ -36,7 +38,7 @@ public class JobAdvertsController {
 		this.jobAdvertService =jobAdvertService;
 	}
 	
-	@GetMapping("/getall")
+	@GetMapping("/getAll")
 	public DataResult<List<JobAdvertDto>> getAll() {
 		return this.jobAdvertService.getAll();
 	}
@@ -47,13 +49,13 @@ public class JobAdvertsController {
 	}
 	
 	@GetMapping("/getAllByIsActive")
-	public DataResult<List<JobAdvertDto>> getByIsActive() {
-		return this.jobAdvertService.getAllByIsActive();
+	public DataResult<List<JobAdvertDto>> getAllByIsActive(@RequestParam int pageNo, @RequestParam int pageSize) {
+		return this.jobAdvertService.getAllByIsActive(pageNo, pageSize);
 	}
 	
 	@GetMapping("/getAllByNotActive")
-	public DataResult<List<JobAdvertDto>> getAllByNotActive() {
-		return this.jobAdvertService.getAllByNotActive();
+	public DataResult<Page<JobAdvertDto>> getAllByNotActive(@RequestParam int pageNo, @RequestParam int pageSize) {
+		return this.jobAdvertService.getAllByNotActive(pageNo, pageSize);
 	}
 	
 	@GetMapping("/getByIsActiveAndCreatedDate")
@@ -62,13 +64,23 @@ public class JobAdvertsController {
 	}
 	
 	@GetMapping("/getByIsActiveAndCompanyName")
-	public DataResult<List<JobAdvertDto>> getByIsActiveAndCompanyName(String companyName) {
-		return this.jobAdvertService.getByIsActiveAndCompanyName(companyName);
+	public DataResult<Page<JobAdvertDto>> getByIsActiveAndCompanyName(@RequestParam String companyName, @RequestParam int pageNo, @RequestParam int pageSize) {
+		return this.jobAdvertService.getByIsActiveAndCompanyName(companyName, pageNo, pageSize);
 	}
 	
-	@GetMapping("/getbyid")
+	@GetMapping("/getByIsActiveAndEmployerId")
+	public DataResult<Page<JobAdvertDto>> getByIsActiveAndEmployerId(@RequestParam int employerId, @RequestParam int pageNo, @RequestParam int pageSize) {
+		return this.jobAdvertService.getByIsActiveAndEmployerId(employerId, pageNo, pageSize);
+	}
+	
+	@GetMapping("/getById")
 	public DataResult<JobAdvert> getById(@RequestParam int id) {
 		return this.jobAdvertService.getById(id);
+	}
+	
+	@PostMapping("/getByJobAdvertFilter")
+	public DataResult<Page<JobAdvert>> getByFilter(@RequestParam int pageNo, @RequestParam int pageSize, @RequestBody JobAdvertFilterDto jobAdvertFilterDto) {
+		return this.jobAdvertService.getByFilter(pageNo, pageSize, jobAdvertFilterDto);
 	}
 	
 	@Transactional

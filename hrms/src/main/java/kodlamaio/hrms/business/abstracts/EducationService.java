@@ -9,6 +9,8 @@ import kodlamaio.hrms.entities.dtos.EducationDto;
 public interface EducationService {
 
 	Result add(EducationDto educationDto);
+	Result update(EducationDto educationDto);
+	Result delete(int id);
 	DataResult<List<EducationDto>> getAll();
 	DataResult<List<EducationDto>> findAllByOrderByEndDateDesc();
 }

@@ -26,7 +26,7 @@ public class WorkPlacesController {
 		this.workPlaceService = workPlaceService;
 	}
 	
-	@GetMapping("/getall")
+	@GetMapping("/getAll")
 	public DataResult<List<WorkPlace>> getAll(){
 		return this.workPlaceService.getAll();
 	}

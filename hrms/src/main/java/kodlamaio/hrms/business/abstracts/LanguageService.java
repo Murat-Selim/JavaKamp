@@ -9,5 +9,7 @@ import kodlamaio.hrms.entities.dtos.LanguageDto;
 public interface LanguageService {
 
 	Result add(LanguageDto languageDto);
+	Result update(LanguageDto languageDto);
+	Result delete(int id);
 	DataResult<List<LanguageDto>> getAll();
 }

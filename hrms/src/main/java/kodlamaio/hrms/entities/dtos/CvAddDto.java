@@ -12,6 +12,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class CvAddDto {
 	
+	private int id;
 	private int candidateId;
 	private String githubLink;
 	private String linkedinLink;

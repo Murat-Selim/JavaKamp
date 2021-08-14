@@ -34,5 +34,5 @@ public class City {
 	private String name;
 	
 	@OneToMany(mappedBy = "city", cascade = CascadeType.ALL)
-	   private List<JobAdvert> jobAdverts;
+	private List<JobAdvert> jobAdverts;
 }

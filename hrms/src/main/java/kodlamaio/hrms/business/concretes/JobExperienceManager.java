@@ -45,4 +45,18 @@ public class JobExperienceManager implements JobExperienceService{
 		return new SuccessDataResult<List<JobExperienceDto>>(dtoConverterService.dtoConverter(jobExperienceDao.findAllByOrderByExitDateDesc(), JobExperienceDto.class));
 	}
 
+
+	@Override
+	public Result update(JobExperienceDto jobExperienceDto) {
+		this.jobExperienceDao.save((JobExperience) dtoConverterService.dtoClassConverter(jobExperienceDto, JobExperience.class));
+		return new SuccessResult("İş tecrubesi başarıyla güncellendi.");
+	}
+
+
+	@Override
+	public Result delete(int id) {
+		this.jobExperienceDao.deleteById(id);
+		return new SuccessResult("İş tecrubesi başarıyla silindi");
+	}
+
 }

@@ -40,4 +40,16 @@ public class LanguageManager implements LanguageService {
 		(this.dtoConverterService.dtoConverter(languageDao.findAll(),LanguageDto.class), "Diller Listelendi");
 	}
 
+	@Override
+	public Result update(LanguageDto languageDto) {
+		this.languageDao.save((Language) dtoConverterService.dtoClassConverter(languageDto, Language.class));
+		return new SuccessResult("Başarıyla Güncellendi");
+	}
+
+	@Override
+	public Result delete(int id) {
+		this.languageDao.deleteById(id);
+		return new SuccessResult("Başarıyla Silindi");
+	}
+
 }

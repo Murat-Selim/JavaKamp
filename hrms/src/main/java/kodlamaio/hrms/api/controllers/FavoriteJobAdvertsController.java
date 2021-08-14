@@ -2,7 +2,10 @@ package kodlamaio.hrms.api.controllers;
 
 import java.util.List;
 
+import javax.transaction.Transactional;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -31,13 +34,13 @@ public class FavoriteJobAdvertsController{
 	}
 	
 	@GetMapping("/getAll")
-	DataResult<List<FavoriteJobAdvert>> getAll(){
-		return this.favoriteJobAdvertService.getAll();
+	DataResult<Page<FavoriteJobAdvert>> getAll(@RequestParam int pageNo, @RequestParam int pageSize){
+		return this.favoriteJobAdvertService.getAll(pageNo, pageSize);
 	}
 	
 	
 	@GetMapping("/getByCandidateId")
-	DataResult<List<FavoriteJobAdvert>> getByCandidateId(int candidateId){
+	DataResult<List<FavoriteJobAdvert>> getByCandidateId(@RequestParam int candidateId){
 		return favoriteJobAdvertService.getByCandidateId(candidateId);
 	}
 	
@@ -51,10 +54,10 @@ public class FavoriteJobAdvertsController{
 		return ResponseEntity.ok(this.favoriteJobAdvertService.add(favoriteJobAdvert));
 	}
 	
+	@Transactional
 	@DeleteMapping("delete")
-	public ResponseEntity<?> delete(@RequestParam int jobAdvertId){
-		return ResponseEntity.ok(this.favoriteJobAdvertService.delete(jobAdvertId));
+	public ResponseEntity<?> delete(@RequestParam int candidateId, @RequestParam int jobAdvertId){
+		return ResponseEntity.ok(this.favoriteJobAdvertService.delete(candidateId, jobAdvertId));
 	}
-	
 	
 }

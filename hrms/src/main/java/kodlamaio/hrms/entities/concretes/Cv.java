@@ -3,6 +3,7 @@ package kodlamaio.hrms.entities.concretes;
 import java.time.LocalDate;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -14,8 +15,6 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonProperty.Access;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -54,25 +53,24 @@ public class Cv {
 	@Column(name="is_active")
 	private boolean isActive;
 	
-	@JsonProperty(access = Access.WRITE_ONLY)
 	@ManyToOne()
 	@JoinColumn(name="candidate_id")
 	private Candidate candidate;
 	
 	
 	@JsonIgnore
-	@OneToMany(mappedBy="cv")
+	@OneToMany(mappedBy="cv", cascade = CascadeType.ALL)
 	private List<Language> languages;
 	
 	@JsonIgnore
-	@OneToMany(mappedBy="cv")
+	@OneToMany(mappedBy="cv", cascade = CascadeType.ALL)
 	private List<Technology> technologies;
 	
 	@JsonIgnore
-	@OneToMany(mappedBy="cv")
+	@OneToMany(mappedBy="cv", cascade = CascadeType.ALL)
 	private List<Education> educations;
 	
 	@JsonIgnore
-	@OneToMany(mappedBy="cv")
+	@OneToMany(mappedBy="cv", cascade = CascadeType.ALL)
 	private List<JobExperience> jobExperiences;	
 }
