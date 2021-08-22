@@ -28,13 +28,13 @@ public class Language {
 	
 	@NotBlank
 	@Column(name="language_name")
-	private String language;
+	private String languageName;
 	
 	@NotBlank
 	@Column(name="level")
 	private char level;
 	
-	@ManyToOne(targetEntity = Cv.class)
+	@ManyToOne()
 	@JoinColumn(name="cv_id")
 	private Cv cv;
 	

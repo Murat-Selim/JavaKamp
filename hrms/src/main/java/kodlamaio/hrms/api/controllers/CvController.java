@@ -20,8 +20,8 @@ import kodlamaio.hrms.business.abstracts.CvService;
 import kodlamaio.hrms.core.utilities.results.DataResult;
 import kodlamaio.hrms.core.utilities.results.Result;
 import kodlamaio.hrms.entities.concretes.Cv;
-import kodlamaio.hrms.entities.dtos.CvAddDto;
 import kodlamaio.hrms.entities.dtos.CvDto;
+import kodlamaio.hrms.entities.dtos.CvSetDto;
 
 @RestController
 @RequestMapping("/api/cv")
@@ -42,17 +42,17 @@ public class CvController {
 	}
 	
 	@PostMapping("/add")
-	public ResponseEntity<?> add(@Valid @RequestBody CvAddDto cvAddDto) {
-		return ResponseEntity.ok(this.cvService.add(cvAddDto));
+	public ResponseEntity<?> add(@Valid @RequestBody CvSetDto cvSetDto) {
+		return ResponseEntity.ok(this.cvService.add(cvSetDto));
 	}
 	
 	@PutMapping("/update")
-	public ResponseEntity<?> update(@Valid @RequestBody CvAddDto cvAddDto) {
-		return ResponseEntity.ok(this.cvService.update(cvAddDto));
+	public ResponseEntity<?> update(@Valid @RequestBody CvSetDto cvSetDto) {
+		return ResponseEntity.ok(this.cvService.update(cvSetDto));
 	}
 	
-	@GetMapping("/findAllByCandidateId")
-	public DataResult<List<CvDto>> findAllByCandidateId(int id) {
+	@GetMapping("/findByCandidateId")
+	public DataResult<List<CvDto>> findAllByCandidateId(@RequestParam int id) {
 		return this.cvService.findAllByCandidateId(id);
 	}
 	
@@ -61,10 +61,14 @@ public class CvController {
 		return this.cvService.getById(id);
 	}
 	
-	@PutMapping("/addImage")
+	@PostMapping("/addImage")
 	public Result saveImage(@RequestBody MultipartFile file, @RequestParam int cvId) {
 		return this.cvService.saveImage(file, cvId);
-		
+	}
+	
+	@PutMapping("/updateImage")
+	public Result updateImage(@RequestBody MultipartFile file, @RequestParam int cvId) {
+		return this.cvService.updateImage(file, cvId);
 	}
 	
 }

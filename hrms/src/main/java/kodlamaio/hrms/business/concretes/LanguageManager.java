@@ -27,6 +27,12 @@ public class LanguageManager implements LanguageService {
 		this.languageDao = languageDao;
 		this.dtoConverterService = dtoConverterService;
 	}
+	
+    @Override
+	public DataResult<List<LanguageDto>> getAll() {
+		return new SuccessDataResult<List<LanguageDto>>
+		(this.dtoConverterService.dtoConverter(languageDao.findAll(),LanguageDto.class), "Diller Listelendi");
+	}
 
 	@Override
 	public Result add(LanguageDto languageDto) {
@@ -35,15 +41,9 @@ public class LanguageManager implements LanguageService {
 	}
 
 	@Override
-	public DataResult<List<LanguageDto>> getAll() {
-		return new SuccessDataResult<List<LanguageDto>>
-		(this.dtoConverterService.dtoConverter(languageDao.findAll(),LanguageDto.class), "Diller Listelendi");
-	}
-
-	@Override
 	public Result update(LanguageDto languageDto) {
 		this.languageDao.save((Language) dtoConverterService.dtoClassConverter(languageDto, Language.class));
-		return new SuccessResult("Başarıyla Güncellendi");
+		return new SuccessResult("Başarıyla Guncellendi");
 	}
 
 	@Override

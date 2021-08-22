@@ -19,8 +19,6 @@ public class FakeMernisService {
 			return true;
 		}
 		
-		
-		
 		else {
 			return false;
 		}

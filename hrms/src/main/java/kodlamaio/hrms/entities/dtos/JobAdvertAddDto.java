@@ -24,9 +24,9 @@ public class JobAdvertAddDto {
 	private Double minSalary;
 	private Double maxSalary;
 	private boolean isActive;
+	private int employerId;
 	private int cityId;
 	private int jobPositionId;
-	private int employerId;
 	private int workTimeId;
 	private int workPlaceId;
 }

@@ -11,6 +11,6 @@ public class LanguageDto {
 	
 	private int id;
 	private int cvId;
-	private String language;
+	private String languageName;
 	private char level;	
 }

@@ -14,7 +14,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -25,6 +25,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Entity
 @Table(name="cv")
+@JsonIgnoreProperties({"hibernateLazyInitializer","handler","technologies","educations","jobExperiences","languages"})
 public class Cv {
 	
 	@Id
@@ -53,24 +54,21 @@ public class Cv {
 	@Column(name="is_active")
 	private boolean isActive;
 	
+	
 	@ManyToOne()
 	@JoinColumn(name="candidate_id")
 	private Candidate candidate;
 	
 	
-	@JsonIgnore
 	@OneToMany(mappedBy="cv", cascade = CascadeType.ALL)
 	private List<Language> languages;
 	
-	@JsonIgnore
 	@OneToMany(mappedBy="cv", cascade = CascadeType.ALL)
 	private List<Technology> technologies;
 	
-	@JsonIgnore
 	@OneToMany(mappedBy="cv", cascade = CascadeType.ALL)
 	private List<Education> educations;
 	
-	@JsonIgnore
 	@OneToMany(mappedBy="cv", cascade = CascadeType.ALL)
 	private List<JobExperience> jobExperiences;	
 }

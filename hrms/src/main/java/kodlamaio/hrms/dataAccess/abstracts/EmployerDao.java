@@ -28,4 +28,6 @@ public interface EmployerDao extends JpaRepository<Employer, Integer>{
 	@Query("update Employer set isActivated=false where id=:userId")
 	int updateChangeFalse(@Param("userId") int userId);
 
+    List<Employer> getByUpdatedDataNotNull();
+
 }

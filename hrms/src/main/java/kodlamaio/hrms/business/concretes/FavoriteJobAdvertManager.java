@@ -1,7 +1,5 @@
 package kodlamaio.hrms.business.concretes;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -42,16 +40,15 @@ public class FavoriteJobAdvertManager implements FavoriteJobAdvertService{
 	}
 	
 	@Override
-	public DataResult<FavoriteJobAdvert> getById(int id) {
-		
+	public DataResult<FavoriteJobAdvert> getById(int id) {	
 		return new SuccessDataResult<FavoriteJobAdvert>(favoriteJobAdvertDao.findById(id).get());
 	}
 
 	
 	@Override
-	public DataResult<List<FavoriteJobAdvert>> getByCandidateId(int candidateId) {
-	
-		return new SuccessDataResult<List<FavoriteJobAdvert>>(favoriteJobAdvertDao.getAllByCandidate_Id(candidateId), "İş arayana göre favori iş ilanları getirme işlemi başarılı!");
+	public DataResult<Page<FavoriteJobAdvert>> getAllByCandidateId(int candidateId, int pageNo, int pageSize) {
+		Pageable pageable = PageRequest.of(pageNo-1, pageSize);
+		return new SuccessDataResult<Page<FavoriteJobAdvert>>(favoriteJobAdvertDao.getAllByCandidate_Id(candidateId, pageable), "İş arayana göre favori iş ilanları getirme işlemi başarılı!");
 	}
 
 	@Override

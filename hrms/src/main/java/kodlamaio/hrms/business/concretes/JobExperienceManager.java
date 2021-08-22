@@ -30,12 +30,6 @@ public class JobExperienceManager implements JobExperienceService{
 	
 
 	@Override
-	public Result add(JobExperienceDto jobExperienceDto) {
-		this.jobExperienceDao.save((JobExperience) dtoConverterService.dtoClassConverter(jobExperienceDto, JobExperience.class));
-		return new SuccessResult("Is tecrubesi Başarıyla eklendi.");
-	}
-
-	@Override
 	public DataResult<List<JobExperienceDto>> getAll() {
 		return new SuccessDataResult<List<JobExperienceDto>>(dtoConverterService.dtoConverter(jobExperienceDao.findAll(),JobExperienceDto.class),"Is tecrubeleri basariyla listelendi");
 	}
@@ -45,9 +39,14 @@ public class JobExperienceManager implements JobExperienceService{
 		return new SuccessDataResult<List<JobExperienceDto>>(dtoConverterService.dtoConverter(jobExperienceDao.findAllByOrderByExitDateDesc(), JobExperienceDto.class));
 	}
 
+    @Override
+    public Result add(JobExperienceDto jobExperienceDto) {
+		this.jobExperienceDao.save((JobExperience) dtoConverterService.dtoClassConverter(jobExperienceDto, JobExperience.class));
+		return new SuccessResult("Is tecrubesi Başarıyla eklendi.");
+	}
 
-	@Override
-	public Result update(JobExperienceDto jobExperienceDto) {
+    @Override
+    public Result update(JobExperienceDto jobExperienceDto) {
 		this.jobExperienceDao.save((JobExperience) dtoConverterService.dtoClassConverter(jobExperienceDto, JobExperience.class));
 		return new SuccessResult("İş tecrubesi başarıyla güncellendi.");
 	}

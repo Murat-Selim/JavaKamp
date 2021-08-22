@@ -38,13 +38,14 @@ public class JobAdvert {
 	@Column(name="number_of_open_position")
     private int numberOfOpenPosition;
 
+	
+    @Column(name = "created_date")
+	@JsonFormat(pattern="yyyy-MM-dd")
+	private LocalDate createdDate;
+	
 	@Column(name = "application_deadline")
 	@JsonFormat(pattern="yyyy-MM-dd")
 	private LocalDate applicationDeadline;
-
-	@Column(name = "created_date")
-	@JsonFormat(pattern="yyyy-MM-dd")
-	private LocalDate createdDate;
 
 	@Column(name = "min_salary")
 	private Double minSalary;
@@ -54,6 +55,11 @@ public class JobAdvert {
 
 	@Column(name = "is_active")
 	private boolean isActive;
+    
+	
+	@ManyToOne()
+	@JoinColumn(name = "employer_id")
+	private Employer employer;
 
 	@ManyToOne()
 	@JoinColumn(name = "city_id")
@@ -63,10 +69,6 @@ public class JobAdvert {
 	@JoinColumn(name = "jobPosition_id")
 	private JobPosition jobPosition;
 
-	@ManyToOne()
-	@JoinColumn(name = "employer_id")
-	private Employer employer;
-	
 	@ManyToOne()
 	@JoinColumn(name = "workTime_id")
 	private WorkTime workTime;

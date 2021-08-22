@@ -1,6 +1,5 @@
 package kodlamaio.hrms.entities.dtos;
 
-
 import java.time.LocalDate;
 
 import lombok.AllArgsConstructor;
@@ -10,7 +9,7 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class CvAddDto {
+public class CvSetDto {
 	
 	private int id;
 	private int candidateId;
@@ -20,6 +19,4 @@ public class CvAddDto {
 	private String description;
 	private LocalDate createdDate;
 	private LocalDate updatedDate;
-	
-
 }

@@ -41,7 +41,7 @@ public class JobAdvertManager implements JobAdvertService{
 	@Override
 	public Result add(JobAdvertAddDto jobAdvertAddDto) {
 		this.jobAdvertDao.save((JobAdvert) dtoConverterService.dtoClassConverter(jobAdvertAddDto, JobAdvert.class));
-		return new SuccessResult("Is ilanlari basariyla eklendi");
+		return new SuccessResult("İş ilanları başarıyla eklendi");
 	}
 	
 	@Override

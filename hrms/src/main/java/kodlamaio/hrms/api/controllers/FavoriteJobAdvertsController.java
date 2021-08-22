@@ -1,7 +1,5 @@
 package kodlamaio.hrms.api.controllers;
 
-import java.util.List;
-
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,9 +37,9 @@ public class FavoriteJobAdvertsController{
 	}
 	
 	
-	@GetMapping("/getByCandidateId")
-	DataResult<List<FavoriteJobAdvert>> getByCandidateId(@RequestParam int candidateId){
-		return favoriteJobAdvertService.getByCandidateId(candidateId);
+	@GetMapping("/getAllByCandidateId")
+	DataResult<Page<FavoriteJobAdvert>> getAllByCandidateId(@RequestParam int candidateId, @RequestParam int pageNo, @RequestParam int pageSize){
+		return favoriteJobAdvertService.getAllByCandidateId(candidateId, pageNo, pageSize);
 	}
 	
 	@GetMapping("getById")

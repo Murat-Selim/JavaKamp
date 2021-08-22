@@ -27,19 +27,19 @@ public class TechnologyManager implements TechnologyService{
 		this.technologyDao = technologyDao;
 		this.dtoConverterService = dtoConverterService;
 	}
+	
+    @Override
+	public DataResult<List<TechnologyDto>> getAll() {
+		return new SuccessDataResult<List<TechnologyDto>>
+		(dtoConverterService.dtoConverter(technologyDao.findAll(),TechnologyDto.class),"Teknoloji bilgisi başarıyla Listelendi");
+	}
 
 	@Override
 	public Result add(TechnologyDto technologyDto) {
 		technologyDao.save((Technology) dtoConverterService.dtoClassConverter(technologyDto, Technology.class));
 		return new SuccessResult("Başarıyla Eklendi");
 	}
-
-	@Override
-	public DataResult<List<TechnologyDto>> getAll() {
-		return new SuccessDataResult<List<TechnologyDto>>
-		(dtoConverterService.dtoConverter(technologyDao.findAll(),TechnologyDto.class),"Teknoloji bilgisi başarıyla Listelendi");
-	}
-
+	
 	@Override
 	public Result update(TechnologyDto technologyDto) {
 		technologyDao.save((Technology) dtoConverterService.dtoClassConverter(technologyDto, Technology.class));

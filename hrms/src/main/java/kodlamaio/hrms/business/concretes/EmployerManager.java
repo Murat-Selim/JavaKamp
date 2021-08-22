@@ -1,6 +1,7 @@
 package kodlamaio.hrms.business.concretes;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -67,14 +68,34 @@ public class EmployerManager implements EmployerService{
 	
 	@Override
 	public Result update(Employer employer) {
-		this.employerDao.save(employer);
-		return new SuccessResult("Data guncellendi");
+		
+		Employer updatedEmployer = employerDao.getOne(employer.getId());
+        updatedEmployer.setUpdatedData(employer);
+
+        employerDao.save(updatedEmployer);
+        return new SuccessResult("Güncelleme başarılı, Aktivasyon için onay bekleniyor");
+	}
+	
+	@Override
+	public Result updateConfirm(int userId) {
+		
+		Employer employer = employerDao.getOne(userId);
+        
+		if (!Objects.isNull(employer.getUpdatedData())) {
+            Employer updatedData = employer.getUpdatedData();
+            employerDao.save(updatedData);
+            return new SuccessResult("Güncellemeler onaylandi");
+        }
+		
+        employerDao.updateChangeActive(userId);
+        employerDao.save(employer);
+        return new SuccessResult("Kullanıcı onaylandi");
 	}
 	
 	@Override
 	public Result updateChangeActive(int userId) {
         employerDao.updateChangeActive(userId);
-		return new SuccessResult("Kullanıcı onay durumu onaylandi");
+		return new SuccessResult("Kullanıcı onaylandi");
 	}
 	
 	@Override
@@ -98,6 +119,12 @@ public class EmployerManager implements EmployerService{
 	@Override
 	public DataResult<Employer> getById(int id) {
 		return new SuccessDataResult<Employer>(this.employerDao.getOne(id), "Employer detaylari getirildi");
+	}
+
+	@Override
+	public DataResult<List<Employer>> getByUpdatedDataNotNull() {
+        return new SuccessDataResult<List<Employer>>(employerDao.getByUpdatedDataNotNull());
+
 	}
 	
 	

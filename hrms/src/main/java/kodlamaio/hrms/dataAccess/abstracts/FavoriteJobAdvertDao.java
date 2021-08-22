@@ -1,7 +1,7 @@
 package kodlamaio.hrms.dataAccess.abstracts;
 
-import java.util.List;
-
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -11,7 +11,7 @@ import kodlamaio.hrms.entities.concretes.FavoriteJobAdvert;
 
 public interface FavoriteJobAdvertDao extends JpaRepository<FavoriteJobAdvert, Integer>{
 
-	List<FavoriteJobAdvert> getAllByCandidate_Id(int candidateId);
+	Page<FavoriteJobAdvert> getAllByCandidate_Id(int candidateId, Pageable pageable);
 	boolean existsByCandidate_IdAndJobAdvert_Id(int candidateId, int jobAdvertId);
 	
 	@Modifying

@@ -48,6 +48,11 @@ public class EmployersController {
 		return this.employerService.update(employer);
 	}
 	
+	@PostMapping("/updateConfirm")
+    public Result updateConfirm(@RequestParam int userId) {
+        return employerService.updateConfirm(userId);
+    }
+	
 	@Transactional
 	@PutMapping("/updateChangeActive")
 	public Result updateChangeActive(int userId) {
@@ -74,5 +79,11 @@ public class EmployersController {
 	public DataResult<Employer> getById(@RequestParam int id) {
 		return this.employerService.getById(id);
 	}
+	
+    @GetMapping("/getByUpdatedDataNotNull")
+    DataResult<List<Employer>> getByUpdatedDataNotNull(){
+        return employerService.getByUpdatedDataNotNull();
+    }
+
 	
 }

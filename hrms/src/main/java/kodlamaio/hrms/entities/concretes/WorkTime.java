@@ -11,6 +11,7 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import lombok.AllArgsConstructor;
@@ -33,6 +34,7 @@ public class WorkTime {
 	@Column(name = "name")
 	private String name;
 	
+	@JsonIgnore
 	@OneToMany(mappedBy = "workTime", cascade = CascadeType.ALL)
-	   private List<JobAdvert> jobAdverts;
+	private List<JobAdvert> jobAdverts;
 }
